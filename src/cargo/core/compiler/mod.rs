@@ -841,12 +841,6 @@ fn build_base_args<'a, 'cfg>(
         cmd.arg("--emit=dep-info,link");
     }
 
-    let prefer_dynamic = (unit.target.for_host() && !unit.target.is_custom_build())
-        || (crate_types.contains(&"dylib") && bcx.ws.members().any(|p| p != unit.pkg));
-    if prefer_dynamic {
-        cmd.arg("-C").arg("prefer-dynamic");
-    }
-
     if opt_level.as_str() != "0" {
         cmd.arg("-C").arg(&format!("opt-level={}", opt_level));
     }
